@@ -17,3 +17,30 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+flake8 = "^7.3.0"
+isort = "^6.0.1"
+bandit = "^1.8.6"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+extend-exclude = '\.html$'
+skip-string-normalization = true
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pylint."MESSAGES CONTROL"]
+  disable = [
+      "C0114",  # Missing module docstring
+      "C0115",  # Missing class docstring
+  ]
+
+[tool.bandit]
+exclude_dirs = ["tests",]
+
+[tool.isort]
+profile = "black"
