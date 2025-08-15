@@ -1,0 +1,13 @@
+{
+  "sqltools.connections": [],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+  },
+  "flake8.enabled": true,
+  "pylint.enabled": false,
+  "isort.args":["--profile", "black"],
+}
