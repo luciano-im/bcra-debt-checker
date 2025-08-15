@@ -9,5 +9,9 @@
   },
   "flake8.enabled": true,
   "pylint.enabled": false,
-  "isort.args":["--profile", "black"],
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "python.analysis.typeCheckingMode": "strict",
 }
