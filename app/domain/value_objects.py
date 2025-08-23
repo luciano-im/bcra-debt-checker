@@ -1,6 +1,7 @@
 import re
+import uuid
 from abc import ABC
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
@@ -46,3 +47,64 @@ class CUIT(ValueObject):
         if vd == 11:
             vd = 0
         return vd == verifier
+
+
+@dataclass(frozen=True)
+class UserId(ValueObject):
+    """Represents a user ID in the system.
+    - Must be a non-empty string.
+    """
+
+    value: str = field(default_factory=lambda: str(uuid.uuid4()))
+
+
+@dataclass(frozen=True)
+class CheckNumber(ValueObject):
+    """Represents a check number.
+    - Must be a string of digits, typically 6 to 8 digits long.
+    """
+
+    value: str
+
+    def __post_init__(self):
+        if not self.value or len(self.value.strip()) == 0:
+            raise ValueError("Check number cannot be empty")
+
+        if not re.fullmatch(r"\d{6,8}", self.value):
+            raise ValueError(f"Invalid check number: {self.value}")
+
+        if not self.value.strip().isdigit():
+            raise ValueError("Check number must contain only digits")
+
+
+@dataclass(frozen=True)
+class DebtPeriod(ValueObject):
+    """Represents a debt period in the format 'YYYYMM'.
+    - Must be a valid date format.
+    """
+
+    value: str
+
+    def __post_init__(self):
+        if not self.value:
+            raise ValueError("Debt period cannot be empty")
+
+        if not re.fullmatch(r"\d{4}(0[1-9]|1[0-2])", self.value):
+            raise ValueError(f"Invalid debt period format: {self.value}")
+
+        year = int(self.value[:4])
+        month = int(self.value[4:])
+
+        if year < 1900:
+            raise ValueError("Year in debt period must be 1900 or later.")
+
+        if month < 1 or month > 12:
+            raise ValueError("Month in debt period must be between 01 and 12.")
+
+    @property
+    def year(self) -> int:
+        return int(self.value[:4])
+
+    @property
+    def month(self) -> int:
+        return int(self.value[4:])
