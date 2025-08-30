@@ -4,7 +4,13 @@ from datetime import datetime
 from typing import Any, Generic, TypeVar
 
 from app.domain.enums import RequestStatus, RequestType
-from app.domain.value_objects import CUIT, DebtCheckRequestId, ValueObject
+from app.domain.value_objects import (
+    CUIT,
+    DebtCheckRequestId,
+    EmailAddress,
+    UserId,
+    ValueObject,
+)
 
 T = TypeVar("T", bound=ValueObject)
 
@@ -41,3 +47,9 @@ class DebtCheckRequest(Entity[DebtCheckRequestId]):
     response_time: int
     status: RequestStatus
     content: str
+
+
+@dataclass(eq=False)
+class User(Entity[UserId]):
+    email: EmailAddress
+    name: str
