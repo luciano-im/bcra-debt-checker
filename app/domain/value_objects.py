@@ -108,3 +108,16 @@ class DebtPeriod(ValueObject):
     @property
     def month(self) -> int:
         return int(self.value[4:])
+
+
+@dataclass(frozen=True)
+class EmailAddress(ValueObject):
+    """Represents an email address.
+    - Must be a valid email format.
+    """
+
+    value: str
+
+    def __post_init__(self):
+        if not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", self.value):
+            raise ValueError(f"Invalid email address: {self.value}")

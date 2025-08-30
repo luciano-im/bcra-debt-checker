@@ -1,6 +1,6 @@
 import pytest
 
-from app.domain.value_objects import CUIT, CheckNumber, DebtPeriod, UserId
+from app.domain.value_objects import CUIT, CheckNumber, DebtPeriod, EmailAddress, UserId
 
 # Tests for CUIT
 
@@ -74,3 +74,26 @@ def test_debtperiod_anio_invalido():
 def test_debtperiod_mes_invalido():
     with pytest.raises(ValueError):
         DebtPeriod("202500")
+
+
+# Tests for EmailAddress
+
+
+def test_emailaddress_valido():
+    email = EmailAddress("usuario@dominio.com")
+    assert email.value == "usuario@dominio.com"
+
+
+def test_emailaddress_invalido_sin_arroba():
+    with pytest.raises(ValueError):
+        EmailAddress("usuariodominio.com")
+
+
+def test_emailaddress_invalido_sin_dominio():
+    with pytest.raises(ValueError):
+        EmailAddress("usuario@dominio")
+
+
+def test_emailaddress_invalido_vacio():
+    with pytest.raises(ValueError):
+        EmailAddress("")
