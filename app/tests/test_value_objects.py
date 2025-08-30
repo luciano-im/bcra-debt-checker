@@ -1,6 +1,13 @@
 import pytest
 
-from app.domain.value_objects import CUIT, CheckNumber, DebtPeriod, EmailAddress, UserId
+from app.domain.value_objects import (
+    CUIT,
+    CheckNumber,
+    DebtCheckRequestId,
+    DebtPeriod,
+    EmailAddress,
+    UserId,
+)
 
 # Tests for CUIT
 
@@ -97,3 +104,21 @@ def test_emailaddress_invalido_sin_dominio():
 def test_emailaddress_invalido_vacio():
     with pytest.raises(ValueError):
         EmailAddress("")
+
+
+# Tests for DebtCheckRequestId
+
+
+def test_debtcheckrequestid_valido():
+    obj = DebtCheckRequestId(10)
+    assert obj.value == 10
+
+
+def test_debtcheckrequestid_cero():
+    with pytest.raises(ValueError):
+        DebtCheckRequestId(0)
+
+
+def test_debtcheckrequestid_negativo():
+    with pytest.raises(ValueError):
+        DebtCheckRequestId(-1)

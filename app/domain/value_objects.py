@@ -121,3 +121,12 @@ class EmailAddress(ValueObject):
     def __post_init__(self):
         if not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", self.value):
             raise ValueError(f"Invalid email address: {self.value}")
+
+
+@dataclass(frozen=True)
+class DebtCheckRequestId(ValueObject):
+    value: int
+
+    def __post_init__(self):
+        if self.value <= 0:
+            raise ValueError("DebtCheckRequestId must be a non-negative integer")

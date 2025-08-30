@@ -1,8 +1,10 @@
 from abc import ABC
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any, Generic, TypeVar
 
-from app.domain.value_objects import CUIT, ValueObject
+from app.domain.enums import RequestStatus, RequestType
+from app.domain.value_objects import CUIT, DebtCheckRequestId, ValueObject
 
 T = TypeVar("T", bound=ValueObject)
 
@@ -29,3 +31,13 @@ class Entity(Generic[T], ABC):
 class PersonaFisicaJuridica(Entity[CUIT]):
     nombre: str
     cuit: CUIT
+
+
+@dataclass(eq=False)
+class DebtCheckRequest(Entity[DebtCheckRequestId]):
+    cuit: CUIT
+    timestamp: datetime
+    request_type: RequestType
+    response_time: int
+    status: RequestStatus
+    content: str
