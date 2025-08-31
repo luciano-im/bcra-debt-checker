@@ -8,6 +8,8 @@ from app.domain.value_objects import (
     CUIT,
     DebtCheckRequestId,
     EmailAddress,
+    MonitoredPersonAlertId,
+    MonitoredPersonId,
     UserId,
     ValueObject,
 )
@@ -47,6 +49,20 @@ class DebtCheckRequest(Entity[DebtCheckRequestId]):
     response_time: int
     status: RequestStatus
     content: str
+
+
+@dataclass(eq=False)
+class MonitoredPerson(Entity[MonitoredPersonId]):
+    user: UserId
+    cuit: CUIT
+
+
+@dataclass(eq=False)
+class MonitoredPersonAlert(Entity[MonitoredPersonAlertId]):
+    cuit: CUIT
+    detection_date: datetime
+    content: str
+    email_sent: bool = False
 
 
 @dataclass(eq=False)

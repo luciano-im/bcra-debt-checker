@@ -130,3 +130,21 @@ class DebtCheckRequestId(ValueObject):
     def __post_init__(self):
         if self.value <= 0:
             raise ValueError("DebtCheckRequestId must be a non-negative integer")
+
+
+@dataclass(frozen=True)
+class MonitoredPersonId(ValueObject):
+    value: int
+
+    def __post_init__(self):
+        if self.value <= 0:
+            raise ValueError("MonitoredPersonId must be a non-negative integer")
+
+
+@dataclass(frozen=True)
+class MonitoredPersonAlertId(ValueObject):
+    value: int
+
+    def __post_init__(self):
+        if self.value <= 0:
+            raise ValueError("MonitoredPersonId must be a non-negative integer")
